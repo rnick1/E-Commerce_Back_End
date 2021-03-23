@@ -8,8 +8,7 @@ router.get('/', (req, res) => {
   // be sure to include its associated Product data
   Tag.findAll({
     include: {
-      model: Product,
-      attributes: ['product_name']
+      model: Product
     }
   })
     .then(tagData => res.json(tagData))
@@ -27,8 +26,7 @@ router.get('/:id', (req, res) => {
       id: req.params.id
     },
     include: {
-      model: Product,
-      attributes: ['product_name']
+      model: Product
     }
   })
     .then(tagData => res.json(tagData))
@@ -50,6 +48,18 @@ router.post('/', (req, res) => {
     });
 });
 
+/* 
+router.post('/', async (req, res) => {
+  try {
+    const newTag = await Tag.create(req.body);
+
+    res.status(200).json(newTag);
+  }catch (err) { 
+    res.status(500).json(err);
+  }
+});
+*/
+
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
   Tag.update(
@@ -67,6 +77,7 @@ router.put('/:id', (req, res) => {
       res.status(500).json(err);
     });
 });
+
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
   Tag.destroy({
